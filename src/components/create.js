@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, Form } from 'semantic-ui-react'
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
+import Environment from '../environment/access_data';
 export default function Create() {
+
+  console.log('Data URL: '+Environment);
+
+  let history = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [checkbox, setCheckbox] = useState(false);
@@ -14,23 +19,26 @@ export default function Create() {
       firstName,
       lastName,
       checkbox
+    }).then(() => {
+      history('/leer')
     })
   }
   return (
+    
     <div>
       <Form className="create-form">
         <Form.Field>
-          <label>First Name</label>
-          <input placeholder='First Name' onChange={(e) => setFirstName(e.target.value)} />
+          <label>Agregar Nombre</label>
+          <input placeholder='Nombre' onChange={(e) => setFirstName(e.target.value)} />
         </Form.Field>
         <Form.Field>
-          <label>Last Name</label>
-          <input placeholder='Last Name' onChange={(e) => setLastName(e.target.value)} />
+          <label>Agregar Apellidos</label>
+          <input placeholder='Apellido' onChange={(e) => setLastName(e.target.value)} />
         </Form.Field>
         <Form.Field>
-          <Checkbox label='I agree to the Terms and Conditions' onChange={(e) => setCheckbox(!checkbox)} />
+          <Checkbox label='Aceptar las condiciones de uso' onChange={(e) => setCheckbox(!checkbox)} />
         </Form.Field>
-        <Button onClick={postData} type='submit'>Submit</Button>
+        <Button onClick={postData} type='submit'>Crear</Button>
       </Form>
     </div>
   )
